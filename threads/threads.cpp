@@ -26,20 +26,16 @@ struct ThreadMultiArgs
 	int Delay;
 };
 
-void myThreadFunc(int val, ThreadMultiArgs* MultiArgs)
+void myThreadFunc(int ID, int Delay)
 {
 	//sleep_for(seconds(3));
 	//cout << "I am myThreadFunc\n";
-	cout << val<<endl;
+	// cout << val<<endl;
 	//Args->bar = 0;
 //	cout << Args->foo<<","<<Args->bar << endl;
 
-
-	for (int i = 0; i < 10; i++)
-	{
-		cout << MultiArgs->Id << endl;
-		sleep_for(milliseconds(MultiArgs->Delay));
-	}
+		cout << ID << endl;
+		sleep_for(milliseconds(Delay));	
 }
 
 
@@ -50,20 +46,25 @@ int main(int argc, char *argv[])
 	Args.foo = 4;
 	Args.bar = 2;
 
-	ThreadMultiArgs MultiArgs;
-	MultiArgs.Id = 10;
-	MultiArgs.Delay = 4;
-	
-
-	thread myThread(myThreadFunc,42, &MultiArgs);
+	thread myThread[5];
+	for (int i = 0; i < 5; i++)
+	{
+		myThread[i] = thread(myThreadFunc, i, i * 600);
+	}
+	//thread myThread(myThreadFunc,42, &MultiArgs);
 
 	// Now our program is running two threads in parallel (the initial one, and myThread).
 	
 	cout << "I am main\n";
 
 	// Wait for myThread to finish.
-	myThread.join();
-	cout << Args.foo << "," << Args.bar << endl;
+	for (int i = 0; i < 5; i++)
+	{
+		myThread[i].join();
+	}
+
+	//myThread.join();
+	//cout << Args.foo << "," << Args.bar << endl;
 
 	// Now we just have the initial thread. So it's safe to exit.
 
