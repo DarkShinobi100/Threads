@@ -19,11 +19,12 @@ struct ThreadArgs
 	int bar;
 };
 
-void myThreadFunc(int val)
+void myThreadFunc(int val, ThreadArgs* Args)
 {
 	//sleep_for(seconds(3));
 	//cout << "I am myThreadFunc\n";
 	cout << val<<endl;
+	cout << Args->foo<<","<<Args->bar << endl;
 }
 
 
@@ -33,7 +34,8 @@ int main(int argc, char *argv[])
 	ThreadArgs Args;
 	Args.foo = 4;
 	Args.bar = 2;
-	thread myThread(myThreadFunc,42);
+
+	thread myThread(myThreadFunc,42, &Args);
 
 	// Now our program is running two threads in parallel (the initial one, and myThread).
 	
