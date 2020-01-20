@@ -14,10 +14,11 @@ using std::this_thread::sleep_for;
 using std::thread;
 
 
-void myThreadFunc()
+void myThreadFunc(int val)
 {
-	sleep_for(seconds(3));
-	cout << "I am myThreadFunc\n";
+	//sleep_for(seconds(3));
+	//cout << "I am myThreadFunc\n";
+	cout << val<<endl;
 }
 
 
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
 {
 	// At the moment our program is only running one thread (the initial one the operating system gave us).
 
-	thread myThread(myThreadFunc);
+	thread myThread(myThreadFunc,42);
 
 	// Now our program is running two threads in parallel (the initial one, and myThread).
 	
