@@ -13,6 +13,11 @@ using std::ofstream;
 using std::this_thread::sleep_for;
 using std::thread;
 
+struct ThreadArgs
+{
+	int foo;
+	int bar;
+};
 
 void myThreadFunc(int val)
 {
@@ -25,7 +30,9 @@ void myThreadFunc(int val)
 int main(int argc, char *argv[])
 {
 	// At the moment our program is only running one thread (the initial one the operating system gave us).
-
+	ThreadArgs Args;
+	Args.foo = 4;
+	Args.bar = 2;
 	thread myThread(myThreadFunc,42);
 
 	// Now our program is running two threads in parallel (the initial one, and myThread).
